@@ -4,7 +4,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>发表问题 编辑问题 公用</title>
+    <title>编写帖子</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
     <link href="../res/layui/css/layui.css" rel="stylesheet">
     <link href="../res/css/global.css" rel="stylesheet">

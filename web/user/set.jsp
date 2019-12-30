@@ -159,11 +159,11 @@
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <div class="layui-form-item">
                         <div class="avatar-add">
-                            <p>这么好看的默认头像你要换?</p>
+                            <p>这么好看的头像你要换? 我都没写这个功能😁</p>
                             <button type="button" class="layui-btn upload-img">
                                 <i class="layui-icon">&#xe67c;</i>上传头像
                             </button>
-                            <img src="<%= user.getAvatar()%>">
+                            <img src="<%= user.getAvatar()%>" style="border-radius: unset;">
                             <span class="loading"></span>
                         </div>
                     </div>
