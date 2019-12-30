@@ -51,7 +51,7 @@ public class Reg extends HttpServlet {
         user.setUsername(username);
         user.setPassword(password);
         user.setGender(gender);
-        user.setAvatar("https://gravatar.com/avatar/" + phone + "?s=200&d=identicon");
+        user.setAvatar("https://www.gravatar.com/avatar/" + phone + "?s=200&d=identicon");
         userDao.reg(user);
 
         printWriter.write("{\"success\":true,\"msg\":\"注册成功!\",\"data\":{}}");
