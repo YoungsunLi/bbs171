@@ -141,6 +141,48 @@ public class UserDao {
         return user;
     }
 
+    /**
+     * 更新用户信息(用户名, 性别, 签名)
+     *
+     * @param id       必须是通过session获取到的用户id
+     * @param username 新的用户名
+     * @param gender   新的性别
+     * @param sign     新的签名
+     */
+    public void updateUserInfo(int id, String username, String gender, String sign) {
+        String sql = "UPDATE user SET username = ?, gender = ?, sign = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, gender);
+            preparedStatement.setString(3, sign);
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 更新用户密码
+     *
+     * @param id       必须是通过session获取到的用户id
+     * @param password 新密码
+     */
+    public void updatePassword(int id, String password) {
+        String sql = "UPDATE user SET password = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

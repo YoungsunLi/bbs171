@@ -144,10 +144,10 @@
         });
 
         forms.on('submit(reg)', function (data) {
-            if (data.field.password !== data.field.repassword) {
-                layer.msg('两次密码不一致!', {icon: 5, anim: 6});
-            } else if (data.field.password.length < 6 || data.field.password.length > 16) {
+            if (data.field.password.length < 6 || data.field.password.length > 16) {
                 layer.msg('密码长度必须为6到16个字符!', {icon: 5, anim: 6});
+            } else if (data.field.password !== data.field.repassword) {
+                layer.msg('两次密码不一致!', {icon: 5, anim: 6});
             } else {
                 $.ajax({
                     type: 'post',

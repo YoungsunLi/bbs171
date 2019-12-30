@@ -349,6 +349,8 @@ public class PostDao {
                 postForUserIndex.setComment(resultSet.getInt("comment"));
                 postForUserIndexList.add(postForUserIndex);
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
