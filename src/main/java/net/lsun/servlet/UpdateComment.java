@@ -1,7 +1,8 @@
 package net.lsun.servlet;
 
+import net.lsun.bean.Comment;
 import net.lsun.bean.User;
-import net.lsun.dao.UserDao;
+import net.lsun.dao.CommentDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UpdatePassword", value = "/update_password")
-public class UpdateUserPassword extends HttpServlet {
+@WebServlet(name = "UpdateComment", value = "/update_comment")
+public class UpdateComment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter printWriter = response.getWriter();
@@ -26,18 +27,19 @@ public class UpdateUserPassword extends HttpServlet {
             return;
         }
 
-        String oldpassword = request.getParameter("oldpassword");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String content = request.getParameter("content");
 
-        UserDao userDao = UserDao.getInstance();
-        User temp = userDao.login(user.getPhone(), oldpassword);
+        CommentDao commentDao = CommentDao.getInstance();
+        Comment comment = commentDao.getCommentById(id);
 
-        if (temp == null) {
-            printWriter.write("{\"success\":false,\"msg\":\"当前密码错误!\",\"data\":{}}");
+        // 验证该评论所有者
+        if (comment.getFrom_phone().equals(user.getPhone()) || user.getType() == 0) {
+            commentDao.updateCommentById(id, content);
+            System.out.println(id+"---"+content);
+            printWriter.write("{\"success\":true,\"msg\":\"编辑成功\",\"data\":{}}");
         } else {
-            int id = user.getId();
-            String password = request.getParameter("password");
-            userDao.updatePassword(id, password);
-            printWriter.write("{\"success\":true,\"msg\":\"修改成功\",\"data\":{}}");
+            printWriter.write("{\"success\":false,\"msg\":\"你无权编辑该评论!\",\"data\":{}}");
         }
     }
 

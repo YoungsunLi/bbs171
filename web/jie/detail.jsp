@@ -222,7 +222,7 @@
                                 if (user != null && (user.getType() == 0 || user.getPhone().equals(commentAndUser.getFrom_phone()))) {
                             %>
                             <div class="jieda-admin">
-                                <span onclick="editPost()">编辑</span>
+                                <span onclick="editComment(<%= commentAndUser.getId()%>,'<%= commentAndUser.getContent()%>');">编辑</span>
                                 <span onclick="delComment(<%= commentAndUser.getId()%>);">删除</span>
                             </div>
                             <%
@@ -300,6 +300,7 @@
     let managePost;
     let editPost;
     let delComment;
+    let editComment;
     let reportPost;
     layui.cache.page = 'jie';
     layui.cache.user = {
@@ -351,7 +352,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 2000)
+                            }, 800)
                         } else {
                             $("#comment").addClass("layui-btn-enabled");
                             $('#comment').attr('disabled', "false");
@@ -459,8 +460,48 @@
         };
 
         editPost = function () {
-            layer.msg('还不得编辑!', {icon: 2, anim: 6})
+            layer.msg('还不得编辑!', {icon: 2, anim: 6});
         };
+
+        editComment = function (id, content) {
+            layer.prompt({
+                formType: 2
+                , value: content
+                , maxlength: 2000
+                , title: '编辑回复'
+                , area: ['728px', '300px']
+                , success: function (layero) {
+                    fly.layEditor({
+                        elem: layero.find('textarea')
+                    });
+                }
+            }, function (value, index) {
+                layer.close(index);
+                $.ajax({
+                    type: 'post',
+                    url: '/update_comment',
+                    data: {
+                        id: id,
+                        content: value
+                    },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.success) {
+                            layer.msg(res.msg, {icon: 6});
+                            setTimeout(function () {
+                                location.reload();
+                            }, 800)
+                        } else {
+                            layer.msg(res.msg, {icon: 5, anim: 6});
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                        layer.msg('请求失败!', {icon: 2, anim: 6});
+                    }
+                });
+            });
+        }
     });
 </script>
 </body>

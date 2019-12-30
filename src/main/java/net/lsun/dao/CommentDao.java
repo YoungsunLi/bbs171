@@ -152,6 +152,25 @@ public class CommentDao {
         return comment;
     }
 
+    /**
+     * 更新回复
+     *
+     * @param id      该回复id
+     * @param content 新的内容
+     */
+    public void updateCommentById(int id, String content) {
+        String sql = "UPDATE comment SET content = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, content);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setComment(Comment comment, ResultSet resultSet) throws SQLException {
         comment.setId(resultSet.getInt("id"));
         comment.setPost_id(resultSet.getInt("post_id"));

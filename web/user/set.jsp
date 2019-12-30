@@ -264,7 +264,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 2000)
+                            }, 800)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }
