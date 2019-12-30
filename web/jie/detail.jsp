@@ -256,7 +256,7 @@
                         </div>
                         <div class="layui-form-item">
                             <input type="hidden" name="post_id" value="<%= postAndUserForDetail.getId()%>">
-                            <button class="layui-btn" lay-filter="comment" lay-submit>提交回复</button>
+                            <button id="comment" class="layui-btn" lay-filter="comment" lay-submit>提交回复</button>
                         </div>
                     </form>
                 </div>
@@ -343,19 +343,23 @@
                     type: 'post',
                     url: '/comment',
                     data: data.field,
-                    dataType:"json",
+                    dataType: "json",
                     success: function (res) {
+                        $("#comment").addClass(" layui-btn-disabled");
+                        $('#comment').attr('disabled', "true");
                         if (res.success) {
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 800)
+                            }, 2000)
                         } else {
+                            $("#comment").addClass(" layui-btn-enabled");
+                            $('#comment').attr('disabled', "false");
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }
                     },
                     error: function (msg) {
-                    console.log(msg);
+                        console.log(msg);
                         layer.msg('请求失败!', {icon: 2, anim: 6});
                     }
                 });
@@ -373,7 +377,7 @@
                         id: id,
                         status: status
                     },
-                    dataType:"json",
+                    dataType: "json",
                     success: function (res) {
                         if (res.success) {
                             layer.msg(res.msg, {icon: 6});
@@ -385,7 +389,7 @@
                         }
                     },
                     error: function (msg) {
-                    console.log(msg);
+                        console.log(msg);
                         layer.msg('请求失败!', {icon: 2, anim: 6});
                     }
                 });
@@ -401,7 +405,7 @@
                     data: {
                         id: id
                     },
-                    dataType:"json",
+                    dataType: "json",
                     success: function (res) {
                         if (res.success) {
                             layer.msg(res.msg, {icon: 6});
@@ -413,7 +417,7 @@
                         }
                     },
                     error: function (msg) {
-                    console.log(msg);
+                        console.log(msg);
                         layer.msg('请求失败!', {icon: 2, anim: 6});
                     }
                 });
@@ -434,7 +438,7 @@
                             post_id: id,
                             content: text
                         },
-                        dataType:"json",
+                        dataType: "json",
                         success: function (res) {
                             if (res.success) {
                                 layer.msg(res.msg, {icon: 6});
@@ -446,7 +450,7 @@
                             }
                         },
                         error: function (msg) {
-                    console.log(msg);
+                            console.log(msg);
                             layer.msg('请求失败!', {icon: 2, anim: 6});
                         }
                     });

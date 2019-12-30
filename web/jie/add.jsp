@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="add" lay-submit>立即发布</button>
+                                <button id="add" class="layui-btn" lay-filter="add" lay-submit>立即发布</button>
                             </div>
                         </form>
                     </div>
@@ -164,12 +164,16 @@
                 data: data.field,
                 dataType:"json",
                 success: function (res) {
+                    $("#add").addClass(" layui-btn-disabled");
+                    $('#add').attr('disabled', "true");
                     if (res.success) {
                         layer.msg(res.msg, {icon: 6});
                         setTimeout(function () {
                             location.href = '/';
                         }, 2000)
                     } else {
+                        $("#add").addClass(" layui-btn-enabled");
+                        $('#add').attr('disabled', "false");
                         layer.msg(res.msg, {icon: 5, anim: 6});
                     }
                 },
