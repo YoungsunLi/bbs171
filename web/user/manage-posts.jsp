@@ -105,7 +105,7 @@
     <div class="site-mobile-shade"></div>
 
 
-    <div class="fly-panel fly-panel-user" pad20 style="min-width: 915px">
+    <div class="fly-panel fly-panel-user" pad20 style="min-width: 958px">
         <form class="layui-form layui-form-pane" method="post" action="/manage-posts"
               style="padding-top: 8px">
             <div class="layui-form-item">

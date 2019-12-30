@@ -130,7 +130,7 @@
                             <a class="jie-title" href="/detail?id=<%= post.getId()%>" target="_blank"><%= post.getTitle()%></a>
                             <em>
                                 <i><%= post.getViews()%>阅/<%= post.getComment()%>回</i>
-                                <i><%= Util.parseTimestampToString(post.getDatetime())%></i>
+                                <i><%= Util.parseTimestampToXxxBefore(post.getDatetime())%></i>
                                 <a class="mine-edit" href="">编辑</a>
                             </em>
                         </li>
