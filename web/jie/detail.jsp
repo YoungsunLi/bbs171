@@ -126,7 +126,8 @@
                         if (user != null && (user.getType() == 0 || user.getPhone().equals(postAndUserForDetail.getPhone()))) {
                     %>
                     <div class="fly-admin-box">
-                        <span class="layui-btn layui-btn-xs " onclick="editPost();">编辑此贴</span>
+                        <a class="layui-btn layui-btn-xs"
+                           href="/update_post?id=<%=postAndUserForDetail.getId()%>">编辑此贴</a>
                         <%
                             if (postAndUserForDetail.getStatus() == 2) {
                         %>
@@ -298,7 +299,6 @@
 <script src="../res/layui/layui.js"></script>
 <script>
     let managePost;
-    let editPost;
     let delComment;
     let editComment;
     let reportPost;
@@ -329,7 +329,7 @@
                 layer.msg('登录后才可以发表新帖哦~', {icon: 7, anim: 6});
                 setTimeout(function () {
                     location.href = '../user/login.jsp';
-                }, 2000)
+                }, 1500)
             } else {
                 location.href = '/to?href=/jie/add.jsp';
             }
@@ -352,7 +352,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 800)
+                            }, 1500)
                         } else {
                             $("#comment").addClass("layui-btn-enabled");
                             $('#comment').attr('disabled', "false");
@@ -369,7 +369,7 @@
         });
 
         managePost = function (id, status) {
-            layer.confirm("确定要该帖子删除吗?", function (index) {
+            layer.confirm("确定要删除该帖子吗?", function (index) {
                 layer.close(index);
                 $.ajax({
                     type: 'post',
@@ -384,7 +384,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.href = '/';
-                            }, 800)
+                            }, 1500)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }
@@ -412,7 +412,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 800)
+                            }, 1500)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }
@@ -445,7 +445,7 @@
                                 layer.msg(res.msg, {icon: 6});
                                 setTimeout(function () {
                                     location.reload();
-                                }, 800)
+                                }, 1500)
                             } else {
                                 layer.msg(res.msg, {icon: 5, anim: 6});
                             }
@@ -457,10 +457,6 @@
                     });
                 });
             }
-        };
-
-        editPost = function () {
-            layer.msg('还不得编辑!', {icon: 2, anim: 6});
         };
 
         editComment = function (id, content) {
@@ -490,7 +486,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 800)
+                            }, 1500)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }

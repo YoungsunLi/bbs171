@@ -1,7 +1,7 @@
 <%@ page import="net.lsun.bean.PostForUserIndex" %>
 <%@ page import="net.lsun.bean.User" %>
-<%@ page import="java.util.List" %>
 <%@ page import="net.lsun.utils.Util" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     List<PostForUserIndex> postForUserIndexList = (List) request.getAttribute("postForUserIndexList");
@@ -117,7 +117,7 @@
                 <div class="layui-tab-item layui-show">
                     <ul class="mine-view jie-row">
                         <%
-                            for (PostForUserIndex post: postForUserIndexList) {
+                            for (PostForUserIndex post : postForUserIndexList) {
                         %>
                         <li>
                             <span class="layui-badge-rim layui-bg-gray"><%= Util.parseCategory(post.getCategory())%></span>
@@ -128,11 +128,15 @@
                             <%
                                 }
                             %>
-                            <a class="jie-title" href="/detail?id=<%= post.getId()%>" target="_blank"><%= post.getTitle()%></a>
+                            <a class="jie-title" href="/detail?id=<%= post.getId()%>"
+                               target="_blank"><%= post.getTitle()%>
+                            </a>
                             <em>
                                 <i><%= post.getViews()%>阅/<%= post.getComment()%>回</i>
-                                <i><%= Util.parseTimestampToXxxBefore(post.getDatetime())%></i>
-                                <a class="mine-edit" href="">编辑</a>
+                                <i><%= Util.parseTimestampToXxxBefore(post.getDatetime())%>
+                                </i>
+                                <a class="mine-edit" href="/update_post?id=<%=post.getId()%>">编辑</a>
+                                <a class="mine-edit layui-bg-red" onclick="managePost(<%= post.getId()%>, 2);">删除</a>
                             </em>
                         </li>
                         <%
@@ -152,6 +156,7 @@
 
 <script src="../res/layui/layui.js"></script>
 <script>
+    let managePost;
     layui.cache.page = 'user';
     layui.cache.user = {
         username: '游客'
@@ -165,8 +170,37 @@
         , base: '../res/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use('fly', function () {
+        let $ = layui.$;
+        managePost = function (id, status) {
+            layer.confirm("确定要删除该帖子吗?", function (index) {
+                layer.close(index);
+                $.ajax({
+                    type: 'post',
+                    url: '/manage-post',
+                    data: {
+                        id: id,
+                        status: status
+                    },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.success) {
+                            layer.msg(res.msg, {icon: 6});
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500)
+                        } else {
+                            layer.msg(res.msg, {icon: 5, anim: 6});
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                        layer.msg('请求失败!', {icon: 2, anim: 6});
+                    }
+                });
+            })
+        }
+    });
 </script>
-
 </body>
 </html>

@@ -300,13 +300,13 @@
                     id: id,
                     status: status
                 },
-                dataType:"json",
+                dataType: "json",
                 success: function (res) {
                     if (res.success) {
                         layer.msg(res.msg, {icon: 6});
                         setTimeout(function () {
                             location.reload();
-                        }, 800)
+                        }, 1500)
                     } else {
                         layer.msg(res.msg, {icon: 5, anim: 6});
                     }

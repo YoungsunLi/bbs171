@@ -227,7 +227,6 @@
         let forms = layui.form;
         let $ = layui.$;
         forms.on('submit(userinfo)', function (data) {
-            console.log(data.field);
             $.ajax({
                 type: 'post',
                 url: '/update_user_info',
@@ -264,7 +263,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.reload();
-                            }, 800)
+                            }, 1500)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }

@@ -357,6 +357,53 @@ public class PostDao {
         return postForUserIndexList;
     }
 
+    /**
+     * 通过id获取一个待编辑的帖子
+     *
+     * @param id 帖子id
+     * @return 编辑帖子所需的字段
+     */
+    public PostForUpdate getPostForUpdateById(int id) {
+        String sql = "SELECT id, title, content, category FROM posts WHERE id = ?";
+        PostForUpdate postForUpdate = new PostForUpdate();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                postForUpdate.setId(resultSet.getInt("id"));
+                postForUpdate.setTitle(resultSet.getString("title"));
+                postForUpdate.setContent(resultSet.getString("content"));
+                postForUpdate.setCategory(resultSet.getInt("category"));
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postForUpdate;
+    }
+
+    /**
+     * 更新帖子
+     *
+     * @param post 新帖子内容对象
+     */
+    public void updatePost(PostForUpdate post) {
+        String sql = "UPDATE posts SET title = ?, content = ?, category = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, post.getTitle());
+            preparedStatement.setString(2, post.getContent());
+            preparedStatement.setInt(3, post.getCategory());
+            preparedStatement.setInt(4, post.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

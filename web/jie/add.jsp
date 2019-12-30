@@ -1,10 +1,26 @@
+<%@ page import="net.lsun.bean.PostForUpdate" %>
 <%@ page import="net.lsun.bean.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%
+    boolean edit = request.getAttribute("edit") != null;
+    PostForUpdate postForUpdate = new PostForUpdate();
+%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>编写帖子</title>
+    <%
+        if (edit) {
+            postForUpdate = (PostForUpdate) request.getAttribute("postForUpdate");
+    %>
+    <title>编辑帖子</title>
+    <%
+    } else {
+    %>
+    <title>发表新帖</title>
+    <%
+        }
+    %>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
     <link href="../res/layui/css/layui.css" rel="stylesheet">
     <link href="../res/css/global.css" rel="stylesheet">
@@ -79,7 +95,17 @@
         <div class="layui-form layui-form-pane">
             <div class="layui-tab layui-tab-brief" lay-filter="user">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">发表新帖<!-- 编辑帖子 --></li>
+                    <%
+                        if (edit) {
+                    %>
+                    <li class="layui-this">编辑帖子</li>
+                    <%
+                    } else {
+                    %>
+                    <li class="layui-this">发表新帖</li>
+                    <%
+                        }
+                    %>
                 </ul>
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
@@ -88,7 +114,7 @@
                                 <div class="layui-col-md3">
                                     <label class="layui-form-label">所在板块</label>
                                     <div class="layui-input-block">
-                                        <select lay-filter="column" lay-verify="required" name="category">
+                                        <select lay-filter="column" lay-verify="required" name="category" id="category">
                                             <option value="1">默认</option>
                                             <option value="2">学习</option>
                                             <option value="3">生活</option>
@@ -102,7 +128,8 @@
                                         <input autocomplete="off" class="layui-input" id="L_title" lay-verify="required"
                                                name="title"
                                                placeholder="请输入标题"
-                                               required type="text">
+                                               required type="text"
+                                               value="<%= edit ? postForUpdate.getTitle() : ""%>">
                                     </div>
                                 </div>
                             </div>
@@ -112,11 +139,14 @@
                                               name="content"
                                               placeholder="详细描述" required
                                               style="height: 260px;"
-                                              maxlength="10000"></textarea>
+                                              maxlength="10000"><%= edit ? postForUpdate.getContent() : ""%></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button id="add" class="layui-btn" lay-filter="add" lay-submit>立即发布</button>
+                                <input type="hidden" name="id" value="<%= postForUpdate.getId()%>">
+                                <button id="add" class="layui-btn" lay-filter="add"
+                                        lay-submit><%= edit ? "提交编辑" : "立即发布"%>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -132,6 +162,8 @@
 
 <script src="../res/layui/layui.js"></script>
 <script>
+    document.getElementById('category')[<%= edit ? postForUpdate.getCategory() - 1 : 0%>].selected = true;
+
     layui.cache.page = 'jie';
     layui.cache.user = {
         username: '游客'
@@ -162,15 +194,15 @@
                 type: 'post',
                 url: '/submit_post',
                 data: data.field,
-                dataType:"json",
+                dataType: "json",
                 success: function (res) {
                     $("#add").addClass("layui-btn-disabled");
                     $('#add').attr('disabled', "true");
                     if (res.success) {
                         layer.msg(res.msg, {icon: 6});
                         setTimeout(function () {
-                            location.href = '/';
-                        }, 2000)
+                            location.href = '<%= edit ? "/detail?id="+postForUpdate.getId() : "/"%>';
+                        }, 1500)
                     } else {
                         $("#add").addClass("layui-btn-enabled");
                         $('#add').attr('disabled', "false");

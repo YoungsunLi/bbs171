@@ -159,7 +159,7 @@
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
                                 location.href = '/user/login.jsp?phone=' + data.field.phone;
-                            }, 2000)
+                            }, 1500)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }

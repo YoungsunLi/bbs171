@@ -36,7 +36,7 @@ public class UpdateComment extends HttpServlet {
         // 验证该评论所有者
         if (comment.getFrom_phone().equals(user.getPhone()) || user.getType() == 0) {
             commentDao.updateCommentById(id, content);
-            System.out.println(id+"---"+content);
+            System.out.println(id + "---" + content);
             printWriter.write("{\"success\":true,\"msg\":\"编辑成功\",\"data\":{}}");
         } else {
             printWriter.write("{\"success\":false,\"msg\":\"你无权编辑该评论!\",\"data\":{}}");
