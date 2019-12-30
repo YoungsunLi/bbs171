@@ -7,6 +7,7 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import net.lsun.dao.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,14 @@ public class SendSms extends HttpServlet {
         PrintWriter printWriter = response.getWriter();
 
         String phone = request.getParameter("phone");
+
+        UserDao userDao = UserDao.getInstance();
+        boolean checkPhone = userDao.checkPhone(phone);
+        // 如果手机已注册
+        if (checkPhone) {
+            printWriter.write("{\"success\":false,\"msg\":\"该手机已注册!\",\"data\":{}}");
+            return;
+        }
 
         final String accessKeyId = "LTAI4Fduaiqwbu4ooEJwSt9Y";
         final String accessKeySecret = "1LJCl7lgAUNbb9rNMXA37CFq87slYG";
@@ -44,14 +53,11 @@ public class SendSms extends HttpServlet {
         String code = (Math.random() + "").substring(2, 8);
         req.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");
 
-        System.out.println("code=" + code);
-
         try {
             CommonResponse res = client.getCommonResponse(req);
             printWriter.write("{\"success\":true,\"msg\":\"发送成功\",\"data\":" + res.getData() + "}");
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("code", code);
-            System.out.println(res.getData());
         } catch (ClientException e) {
             printWriter.write("{\"success\":false,\"msg\":\"发送失败\",\"data\":{}}");
             e.printStackTrace();

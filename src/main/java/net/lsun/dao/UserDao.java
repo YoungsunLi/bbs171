@@ -28,13 +28,14 @@ public class UserDao {
      * @param user User
      */
     public void reg(User user) {
-        String sql = "INSERT INTO user(phone, username, password, avatar) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO user(phone, username, password, gender, avatar) VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getPhone());
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getAvatar());
+            preparedStatement.setString(4, user.getGender());
+            preparedStatement.setString(5, user.getAvatar());
             preparedStatement.executeUpdate();
             System.out.println("用户:" + user.getUsername() + " 注册成功");
             preparedStatement.close();

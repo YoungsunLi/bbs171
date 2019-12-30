@@ -68,8 +68,8 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <input type="radio" name="gander" value="男" title="男" checked="">
-                            <input type="radio" name="gander" value="女" title="女">
+                            <input type="radio" name="gender" value="男" title="男" checked="">
+                            <input type="radio" name="gender" value="女" title="女">
                         </div>
                         <div class="layui-form-item">
                             <button class="layui-btn" lay-filter="reg" lay-submit>立即注册</button>
@@ -125,7 +125,12 @@
                         $('#get_code').attr('disabled', "true");
                         setTime(ele);
                         console.log(res);
-                        layer.msg(res.msg, {icon: 6});
+                        if (res.data.Code === 'OK') {
+                            layer.msg(res.msg, {icon: 6});
+                        } else {
+                            console.log(res.data.Message);
+                            layer.msg("发送异常", {icon: 5, anim: 6});
+                        }
                     } else {
                         layer.msg(res.msg, {icon: 5, anim: 6});
                     }
@@ -153,7 +158,7 @@
                         if (res.success) {
                             layer.msg(res.msg, {icon: 6});
                             setTimeout(function () {
-                                location.href = '../user/login.jsp?phone=' + data.field.phone;
+                                location.href = '/user/login.jsp?phone=' + data.field.phone;
                             }, 2000)
                         } else {
                             layer.msg(res.msg, {icon: 5, anim: 6});
