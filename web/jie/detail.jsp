@@ -276,14 +276,14 @@
                 </dd>
             </dl>
             <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">👌广告时间</dt>
+                <dt class="fly-panel-title">🙈广告时间</dt>
                 <dd style="white-space: normal; color: #333">
                     <li> 个人站点: <a href="https://lsun.net" target="_blank"> lsun.net</a></li>
                     <li> GitHub: <a href="https://github.com/YoungsunLi" target="_blank"> YoungsunLi</a></li>
                 </dd>
             </dl>
             <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">👌广告时间</dt>
+                <dt class="fly-panel-title">🙈广告时间</dt>
                 <dd style="white-space: normal; color: #333">
                     <div class="fly-none">广告位招租</div>
                 </dd>
