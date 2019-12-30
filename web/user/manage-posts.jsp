@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../res/layui/css/layui.css">
     <link rel="stylesheet" href="../res/css/global.css">
 </head>
-<body>
+<body style="white-space: nowrap; overflow-x: auto;">
 
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
@@ -105,7 +105,7 @@
     <div class="site-mobile-shade"></div>
 
 
-    <div class="fly-panel fly-panel-user" pad20>
+    <div class="fly-panel fly-panel-user" pad20 style="min-width: 915px">
         <form class="layui-form layui-form-pane" method="post" action="/manage-posts"
               style="padding-top: 8px">
             <div class="layui-form-item">
