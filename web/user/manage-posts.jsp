@@ -58,7 +58,7 @@
                     <img src="<%= request.getContextPath() + user.getAvatar()%>" alt="avatar">
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+                    <dd><a href="/to?href=/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a>
                     </dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="/logout" style="text-align: center;">退出</a></dd>
@@ -75,13 +75,13 @@
 <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
-            <a href="/to?href=/user/index.jsp">
+            <a href="/user_index">
                 <i class="layui-icon">&#xe612;</i>
                 用户中心
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="../user/set.html">
+            <a href="/to?href=/user/set.jsp">
                 <i class="layui-icon">&#xe620;</i>
                 基本设置
             </a>

@@ -1,5 +1,11 @@
+<%@ page import="net.lsun.bean.PostForUserIndex" %>
 <%@ page import="net.lsun.bean.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="net.lsun.utils.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%
+    List<PostForUserIndex> postForUserIndexList = (List) request.getAttribute("postForUserIndexList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +53,7 @@
                     <img src="<%= request.getContextPath() + user.getAvatar()%>" alt="avatar">
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+                    <dd><a href="/to?href=/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a>
                     </dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="/logout" style="text-align: center;">退出</a></dd>
@@ -64,13 +70,13 @@
 <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item layui-this">
-            <a href="/to?href=/user/index.jsp">
+            <a href="/user_index">
                 <i class="layui-icon">&#xe612;</i>
                 用户中心
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="/user/set.html">
+            <a href="/to?href=/user/set.jsp">
                 <i class="layui-icon">&#xe620;</i>
                 基本设置
             </a>
@@ -109,17 +115,28 @@
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <ul class="mine-view jie-row">
+                        <%
+                            for (PostForUserIndex post: postForUserIndexList) {
+                        %>
                         <li>
-                            <a class="jie-title">没得空做呢</a>
-                            <a class="mine-edit">编辑</a>
-                            <em>000</em>
+                            <span class="layui-badge-rim layui-bg-gray"><%= Util.parseCategory(post.getCategory())%></span>
+                            <%
+                                if (post.getStatus() == 0) {
+                            %>
+                            <span class="layui-badge layui-bg-orange">审核中</span>
+                            <%
+                                }
+                            %>
+                            <a class="jie-title" href="/detail?id=<%= post.getId()%>" target="_blank"><%= post.getTitle()%></a>
+                            <em>
+                                <i><%= post.getViews()%>阅/<%= post.getComment()%>回</i>
+                                <i><%= Util.parseTimestampToString(post.getDatetime())%></i>
+                                <a class="mine-edit" href="">编辑</a>
+                            </em>
                         </li>
-<%--                        <li>--%>
-<%--                            <a class="jie-title" href="/to?href=/jie/detail.jsp" target="_blank">基于 layui 的极简社区页面模版</a>--%>
-<%--                            <i>2017/3/14 上午8:30:00</i>--%>
-<%--                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>--%>
-<%--                            <em>661阅/10答</em>--%>
-<%--                        </li>--%>
+                        <%
+                            }
+                        %>
                     </ul>
                     <div id="LAY_page"></div>
                 </div>

@@ -66,7 +66,7 @@
                     <img src="<%= request.getContextPath() + user.getAvatar()%>" alt="avatar">
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a>
+                    <dd><a href="/to?href=/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a>
                     </dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="/logout" style="text-align: center;">退出</a></dd>
@@ -103,8 +103,7 @@
             %>
             <!-- 用户登入后显示 -->
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-            <li class="layui-hide-sm layui-show-md-inline-block"><a
-                    href="/to?href=/user/index.jsp">我发表的贴</a></li>
+            <li class="layui-hide-sm layui-show-md-inline-block"><a href="/user_index">我发表的贴</a></li>
             <%
                 }
             %>

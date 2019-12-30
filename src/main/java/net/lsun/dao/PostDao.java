@@ -1,13 +1,12 @@
 package net.lsun.dao;
 
-import net.lsun.bean.Post;
-import net.lsun.bean.PostAndUserForDetail;
-import net.lsun.bean.PostAndUserForIndex;
-import net.lsun.bean.PostAndUserForManage;
+import net.lsun.bean.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PostDao {
@@ -253,19 +252,6 @@ public class PostDao {
         return phone;
     }
 
-    private void setPost(Post post, ResultSet resultSet) throws SQLException {
-        post.setId(resultSet.getInt("id"));
-        post.setPhone(resultSet.getString("phone"));
-        post.setTitle(resultSet.getString("title"));
-        post.setContent(resultSet.getString("content"));
-        post.setDatetime(resultSet.getTimestamp("datetime"));
-        post.setCategory(resultSet.getInt("category"));
-        post.setViews(resultSet.getInt("views"));
-        post.setStatus(resultSet.getInt("status"));
-        post.setReport(resultSet.getInt("report"));
-        post.setComment(resultSet.getInt("comment"));
-    }
-
     /**
      * 记录一次浏览量
      *
@@ -321,7 +307,7 @@ public class PostDao {
     }
 
     /**
-     * 管理帖子
+     * 管理帖子(审核 删除)
      *
      * @param id     帖子id
      * @param status 帖子状态
@@ -337,6 +323,36 @@ public class PostDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 通过session用户的手机获取该用户帖子
+     *
+     * @param phone 手机号
+     * @return 该用户的帖子 包括未审核
+     */
+    public List<PostForUserIndex> getPostsByPhone(String phone) {
+        String sql = "SELECT id, title, datetime, category, views, status, comment FROM posts WHERE phone = ? AND status < 2";
+        List<PostForUserIndex> postForUserIndexList = new ArrayList<PostForUserIndex>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, phone);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                PostForUserIndex postForUserIndex = new PostForUserIndex();
+                postForUserIndex.setId(resultSet.getInt("id"));
+                postForUserIndex.setTitle(resultSet.getString("title"));
+                postForUserIndex.setDatetime(resultSet.getTimestamp("datetime"));
+                postForUserIndex.setCategory(resultSet.getInt("category"));
+                postForUserIndex.setViews(resultSet.getInt("views"));
+                postForUserIndex.setStatus(resultSet.getInt("status"));
+                postForUserIndex.setComment(resultSet.getInt("comment"));
+                postForUserIndexList.add(postForUserIndex);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postForUserIndexList;
     }
 
     @Override

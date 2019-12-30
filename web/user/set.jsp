@@ -1,4 +1,5 @@
-
+<%@ page import="net.lsun.bean.User" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,22 +16,47 @@
     <a class="fly-logo" href="/">
       <img src="../res/images/logo.png" alt="bbs171" style=" height: 37px; width: 135px;">
     </a>
-    
     <ul class="layui-nav fly-nav-user">
+
+      <%
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+      %>
+
+      <!-- 未登入的状态 -->
+      <li class="layui-nav-item">
+        <a class="iconfont icon-touxiang layui-hide-xs"
+           href="../user/login.jsp"></a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="../user/login.jsp">登入</a>
+      </li>
+      <li class="layui-nav-item">
+        <a href="../user/reg.jsp">注册</a>
+      </li>
+
+      <%
+      } else {
+      %>
+
       <!-- 登入后的状态 -->
       <li class="layui-nav-item">
-        <a class="fly-nav-avatar" href="javascript:;">
-          <cite class="layui-hide-xs">贤心</cite>
-          <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+        <a class="fly-nav-avatar" href="javascript:">
+          <cite class="layui-hide-xs"><%= user.getUsername()%>
+          </cite>
+          <img src="<%= request.getContextPath() + user.getAvatar()%>" alt="avatar">
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a href="/to?href=/user/set.jsp"><i class="layui-icon">&#xe620;</i>基本设置</a>
+          </dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="" style="text-align: center;">退出</a></dd>
+          <dd><a href="/logout" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
+
+      <%
+        }
+      %>
     </ul>
   </div>
 </div>
@@ -38,23 +64,30 @@
 <div class="layui-container fly-marginTop fly-user-main">
   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
     <li class="layui-nav-item">
-      <a href="/to?href=/user/index.jsp">
+      <a href="/user_index">
         <i class="layui-icon">&#xe612;</i>
         用户中心
       </a>
     </li>
     <li class="layui-nav-item layui-this">
-      <a href="./set.html">
+      <a href="/to?href=/user/set.jsp">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>
     </li>
+
+    <%
+      if (user != null && user.getType() == 0) {
+    %>
     <li class="layui-nav-item">
       <a href="/manage-posts">
         <i class="layui-icon">&#xe632;</i>
         管理帖子
       </a>
     </li>
+    <%
+      }
+    %>
   </ul>
 
   <div class="site-tree-mobile layui-hide">
