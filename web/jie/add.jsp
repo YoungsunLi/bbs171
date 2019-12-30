@@ -164,7 +164,7 @@
                 data: data.field,
                 dataType:"json",
                 success: function (res) {
-                    $("#add").addClass(" layui-btn-disabled");
+                    $("#add").addClass("layui-btn-disabled");
                     $('#add').attr('disabled', "true");
                     if (res.success) {
                         layer.msg(res.msg, {icon: 6});
@@ -172,7 +172,7 @@
                             location.href = '/';
                         }, 2000)
                     } else {
-                        $("#add").addClass(" layui-btn-enabled");
+                        $("#add").addClass("layui-btn-enabled");
                         $('#add').attr('disabled', "false");
                         layer.msg(res.msg, {icon: 5, anim: 6});
                     }

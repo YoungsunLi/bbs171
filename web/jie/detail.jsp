@@ -345,7 +345,7 @@
                     data: data.field,
                     dataType: "json",
                     success: function (res) {
-                        $("#comment").addClass(" layui-btn-disabled");
+                        $("#comment").addClass("layui-btn-disabled");
                         $('#comment').attr('disabled', "true");
                         if (res.success) {
                             layer.msg(res.msg, {icon: 6});
@@ -353,7 +353,7 @@
                                 location.reload();
                             }, 2000)
                         } else {
-                            $("#comment").addClass(" layui-btn-enabled");
+                            $("#comment").addClass("layui-btn-enabled");
                             $('#comment').attr('disabled', "false");
                             layer.msg(res.msg, {icon: 5, anim: 6});
                         }

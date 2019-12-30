@@ -32,6 +32,7 @@
             <%
                 User user = (User) session.getAttribute("user");
                 if (user == null) {
+                    request.getRequestDispatcher("/to?href=/user/login.jsp").forward(request, response);
             %>
 
             <!-- 未登入的状态 -->
@@ -64,7 +65,6 @@
                     <dd><a href="/logout" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
-
             <%
                 }
             %>

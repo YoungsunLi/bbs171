@@ -27,6 +27,7 @@
             <%
                 User user = (User) session.getAttribute("user");
                 if (user == null) {
+                    request.getRequestDispatcher("/to?href=/user/login.jsp").forward(request, response);
             %>
 
             <!-- 未登入的状态 -->
