@@ -183,6 +183,25 @@ public class UserDao {
         }
     }
 
+    /**
+     * 更新用户头像
+     *
+     * @param id     必须是通过session获取到的用户id
+     * @param avatar 新头像
+     */
+    public void updateAvatar(int id, String avatar) {
+        String sql = "UPDATE user SET avatar = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, avatar);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

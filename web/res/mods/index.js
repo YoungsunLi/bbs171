@@ -1,24 +1,24 @@
 ﻿layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(exports){
-  
+
   let $ = layui.jquery
   ,layer = layui.layer
   ,form = layui.form
   ,upload = layui.upload
   ,util = layui.util
   ,device = layui.device();
-  
+
   //阻止IE7以下访问
   if(device.ie && device.ie < 8){
     layer.alert('如果您非得使用 IE 浏览器访问论坛，那么请使用 IE8+');
   }
-  
+
   layui.focusInsert = function(obj, str){
     let result, val = obj.value;
     obj.focus();
     if(document.selection){ //ie
-      result = document.selection.createRange(); 
-      document.selection.empty(); 
-      result.text = str; 
+      result = document.selection.createRange();
+      document.selection.empty();
+      result.text = str;
     } else {
       result = [val.substring(0, obj.selectionStart), str, val.substr(obj.selectionEnd)];
       obj.focus();
@@ -37,13 +37,13 @@
     }
     return num < Math.pow(10, length) ? str + (num|0) : num;
   };
-  
+
   let fly = {
 
     //Ajax
     json: function(url, data, success, options){
       let that = this, type = typeof data === 'function';
-      
+
       if(type){
         options = success;
         success = data;
@@ -79,7 +79,7 @@
       }
       return len;
     }
-    
+
     ,form: {}
 
     //简易编辑器
@@ -132,7 +132,7 @@
                 ,'<div class="layui-input-inline">'
                     ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" value="" class="layui-input">'
                   ,'</div>'
-                  ,'<button type="button" class="layui-btn layui-btn-primary" id="uploadImg"><i class="layui-icon">&#xe67c;</i>上传图片</button>'
+                  ,'<button type="button" class="layui-btn layui-btn-primary" id="uploadImg" style="margin-top: 20px"><i class="layui-icon">&#xe67c;</i>上传图片</button>'
               ,'</li>'
               ,'<li class="layui-form-item" style="text-align: center;">'
                 ,'<button type="button" lay-submit lay-filter="uploadImages" class="layui-btn">确认</button>'
@@ -144,17 +144,17 @@
               //执行上传实例
               upload.render({
                 elem: '#uploadImg'
-                ,url: '/api/upload/'
-                ,size: 200
+                ,url: '/upload'
+                ,size: 10240
                 ,done: function(res){
-                  if(res.status == 0){
-                    image.val(res.url);
+                  if(res.success){
+                    image.val(res.data.url);
                   } else {
                     layer.msg(res.msg, {icon: 5});
                   }
                 }
               });
-              
+
               form.on('submit(uploadImages)', function(data){
                 let field = data.field;
                 if(!field.image) return image.focus();
@@ -201,8 +201,8 @@
         }
         ,yulan: function(editor){ //预览
           let content = editor.val();
-          
-          content = /^\{html\}/.test(content) 
+
+          content = /^\{html\}/.test(content)
             ? content.replace(/^\{html\}/, '')
           : fly.content(content);
 
@@ -216,7 +216,7 @@
           });
         }
       };
-      
+
       layui.use('face', function(face){
         options = options || {};
         fly.faces = face;
@@ -232,7 +232,7 @@
           });
         });
       });
-      
+
     }
 
     ,escape: function(html){
@@ -260,7 +260,7 @@
         let rel =  /^(http(s)*:\/\/)\b(?!(\w+\.)*(sentsin.com|layui.com))\b/.test(href.replace(/\s/g, ''));
         return '<a href="'+ href +'" target="_blank"'+ (rel ? ' rel="nofollow"' : '') +'>'+ (text||href) +'</a>';
       }).replace(html(), '\<$1 $2\>').replace(html('/'), '\</$1\>') //转移HTML代码
-      .replace(/\n/g, '<br>') //转义换行   
+      .replace(/\n/g, '<br>') //转义换行
       return content;
     }
   };
@@ -324,7 +324,7 @@
     layui.extend(extend);
     layui.use(layui.cache.page);
   }
-  
+
   //加载IM
   if(!device.android && !device.ios){
     //layui.use('im');
@@ -354,7 +354,7 @@
       othis.html('（下载量：'+ res.number +'）');
     })
   });
-  
+
   //固定Bar
   util.fixbar({
     bar1: '&#xe642;'

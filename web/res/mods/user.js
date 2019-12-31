@@ -3,7 +3,7 @@
  @Name: 用户模块
 
  */
- 
+
 layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
 
   var $ = layui.jquery;
@@ -51,17 +51,18 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
 
       upload.render({
         elem: '.upload-img'
-        ,url: '/user/upload/'
-        ,size: 50
+        ,url: '/upload'
+        ,size: 2048
         ,before: function(){
           avatarAdd.find('.loading').show();
         }
         ,done: function(res){
-          if(res.status == 0){
-            $.post('/user/set/', {
-              avatar: res.url
+          if(res.success){
+            console.log(res);
+            $.post('/update_user_avatar', {
+              avatar: res.data.url
             }, function(res){
-              location.reload();
+                location.reload();
             });
           } else {
             layer.msg(res.msg, {icon: 5});
@@ -120,5 +121,5 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
   dom.minemsg[0] && gather.minemsg();
 
   exports('user', null);
-  
+
 });

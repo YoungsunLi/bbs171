@@ -31,7 +31,14 @@ public class UpdateUserInfo extends HttpServlet {
 
             UserDao userDao = UserDao.getInstance();
             userDao.updateUserInfo(id, username, gender, sign);
-            printWriter.write("{\"success\":true,\"msg\":\"修改成功, 重新登录后生效.\",\"data\":{}}");
+
+            user.setUsername(username);
+            user.setGender(gender);
+            user.setSign(sign);
+
+            httpSession.setAttribute("user", user);
+
+            printWriter.write("{\"success\":true,\"msg\":\"修改成功\",\"data\":{}}");
         }
     }
 
