@@ -19,10 +19,13 @@ public class Index extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         int category = request.getParameter("category") == null ? 0 : Integer.parseInt(request.getParameter("category"));
         int sort = request.getParameter("sort") == null ? 0 : Integer.parseInt(request.getParameter("sort"));
         String keywords = request.getParameter("keywords") == null ? "" : request.getParameter("keywords");
+
+        keywords = new String(keywords.getBytes("ISO-8859-1"), "UTF-8");
 
         PostDao postDao = PostDao.getInstance();
         List<PostAndUserForIndex> postAndUserForIndexList = postDao.queryPostsAnUserForIndex(category, sort, keywords);

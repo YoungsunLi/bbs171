@@ -5,9 +5,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     List<PostAndUserForManage> postAndUserForManageList = (List) request.getAttribute("postAndUserForManageList");
-    int category = (int) request.getAttribute("category");
-    int sort = (int) request.getAttribute("sort");
-    int status = (int) request.getAttribute("status");
+    int category = request.getParameter("category") != null ? Integer.parseInt(request.getParameter("category")) : 0;
+    int sort = request.getParameter("sort") != null ? Integer.parseInt(request.getParameter("sort")) : 0;
+    int status = request.getParameter("status") != null ? Integer.parseInt(request.getParameter("status")) : 3;
     String keywords = (String) request.getAttribute("keywords");
 %>
 <!DOCTYPE html>
@@ -209,7 +209,8 @@
                     </td>
                     <td>
                         <a class="jie-title"
-                           href="" target="_blank" style="width: 320px"><%= postAndUserForManageList.get(i).getUsername()%>
+                           href="" target="_blank"
+                           style="width: 320px"><%= postAndUserForManageList.get(i).getUsername()%>
                         </a>
                     </td>
                     <td><%= Util.parseTimestampToString(postAndUserForManageList.get(i).getDatetime())%>

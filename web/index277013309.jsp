@@ -5,9 +5,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     List<PostAndUserForIndex> postAndUserForIndexList = (List) request.getAttribute("postAndUserForIndexList");
-    int category = (int) request.getAttribute("category");
-    int sort = (int) request.getAttribute("sort");
-    String keywords = (String) request.getAttribute("keywords");
+    int category = request.getParameter("category") != null ? Integer.parseInt(request.getParameter("category")) : 0;
+    int sort = request.getParameter("sort") != null ? Integer.parseInt(request.getParameter("sort")) : 0;
+    String keywords = request.getParameter("keywords") != null ? request.getParameter("keywords") : "";
+    keywords = new String(keywords.getBytes("ISO-8859-1"), "UTF-8");
 %>
 <!DOCTYPE html>
 <html lang="zh-CN">

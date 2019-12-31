@@ -159,7 +159,7 @@
                 <div class="layui-form layui-form-pane layui-tab-item">
                     <div class="layui-form-item">
                         <div class="avatar-add">
-                            <p>最大不能超过2MB<</p>
+                            <p>最大不能超过2MB</p>
                             <button type="button" class="layui-btn upload-img">
                                 <i class="layui-icon">&#xe67c;</i>上传头像
                             </button>

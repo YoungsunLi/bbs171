@@ -15,6 +15,7 @@
     <title><%= postAndUserForDetail.getTitle()%>
     </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <meta name="referrer" content="no-referrer" />
     <link href="../res/layui/css/layui.css" rel="stylesheet">
     <link href="../res/css/global.css" rel="stylesheet">
 </head>
