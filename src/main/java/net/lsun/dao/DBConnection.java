@@ -14,9 +14,9 @@ public class DBConnection {
             e.printStackTrace();
         }
 
-        final String URL = "jdbc:mysql://127.0.0.1:3306/bbs171?serverTimezone=Asia/Shanghai";
-//        final String USERNAME = "bbs171";
-//        final String PASSWORD = "LbGb2EfKzxXjZNdS";
+        final String URL = "jdbc:mysql://bbs171.lsun.net:3306/bbs171?serverTimezone=Asia/Shanghai";
+        final String USERNAME = "bbs171";
+        final String PASSWORD = "LbGb2EfKzxXjZNdS";
 
         final String USERNAME = "root";
         final String PASSWORD = "123456";

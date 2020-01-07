@@ -180,4 +180,10 @@ public class CommentDao {
         comment.setDatetime(resultSet.getTimestamp("datetime"));
         comment.setStatus(resultSet.getInt("status"));
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        connection.close();
+    }
 }
